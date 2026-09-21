@@ -1,0 +1,17 @@
+[Unit]
+Description=Personal website
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/personal-website/app
+Environment=NODE_ENV=production
+EnvironmentFile=/srv/personal-website/app/.env
+ExecStart=/usr/bin/env pnpm start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

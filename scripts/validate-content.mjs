@@ -4,7 +4,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = path.resolve(process.argv[2] ?? 'content');
-const requiredFiles = ['site.json', 'about.md', 'privacy.md', 'cv/cv.pdf'];
+const requiredFiles = ['site.json', 'about.md', 'cv/cv.pdf'];
 
 function fail(message) {
   process.stderr.write(`Content validation failed: ${message}\n`);
@@ -43,9 +43,6 @@ try {
     const url = new URL(link?.url);
     if (!['http:', 'https:'].includes(url.protocol)) throw new Error(`contacts.links[${index}].url must use HTTP(S)`);
   }
-  for (const key of ['title', 'nameLabel', 'emailLabel', 'companyLabel', 'subjectLabel', 'messageLabel', 'submitLabel', 'successMessage', 'privacyLabel']) {
-    text(site?.contacts?.form?.[key], `contacts.form.${key}`, 300);
-  }
   text(site?.cv?.title, 'cv.title', 80);
   if (site?.cv?.fileName !== 'cv.pdf') throw new Error('cv.fileName must be cv.pdf');
   text(site?.cv?.downloadName, 'cv.downloadName', 180);
@@ -55,17 +52,14 @@ try {
   text(site?.seo?.title, 'seo.title', 70);
   text(site?.seo?.description, 'seo.description', 170);
 
-  const [about, privacy, pdf] = await Promise.all([
+  const [about, pdf] = await Promise.all([
     readFile(path.join(root, 'about.md'), 'utf8'),
-    readFile(path.join(root, 'privacy.md'), 'utf8'),
     readFile(path.join(root, 'cv/cv.pdf'))
   ]);
   text(about, 'about.md', 50_000);
-  text(privacy, 'privacy.md', 50_000);
   if (!pdf.subarray(0, 5).equals(Buffer.from('%PDF-'))) throw new Error('cv/cv.pdf is not a PDF file');
 
   process.stdout.write(`Content is valid: ${root}\n`);
 } catch (error) {
   fail(error instanceof Error ? error.message : String(error));
 }
-

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next';
 import { getSiteUrl, readPortfolioContent } from '../lib/content';
 import './styles.css';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await readPortfolioContent();
   const siteUrl = getSiteUrl();
@@ -40,4 +42,3 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
-

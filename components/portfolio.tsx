@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import type { PortfolioContent } from '../lib/content';
@@ -74,81 +73,6 @@ function Modal({
   );
 }
 
-function ContactForm({ content }: { content: PortfolioContent['site']['contacts'] }) {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState('');
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    setStatus('sending');
-    setMessage('');
-
-    const values = Object.fromEntries(new FormData(form).entries());
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(values)
-      });
-      if (!response.ok) {
-        const payload = await response.json().catch(() => ({})) as { message?: string };
-        throw new Error(payload.message ?? 'The message could not be sent. Please try again.');
-      }
-      form.reset();
-      setStatus('success');
-      setMessage(content.form.successMessage);
-    } catch (error) {
-      setStatus('error');
-      setMessage(error instanceof Error ? error.message : 'The message could not be sent.');
-    }
-  }
-
-  return (
-    <form className="contact-form" onSubmit={submit} noValidate={false}>
-      <h3>{content.form.title}</h3>
-      <div className="form-grid">
-        <label className="od-field">
-          <span>{content.form.nameLabel}</span>
-          <input name="name" required maxLength={100} autoComplete="name" />
-        </label>
-        <label className="od-field">
-          <span>{content.form.emailLabel}</span>
-          <input name="email" type="email" required maxLength={254} autoComplete="email" />
-        </label>
-        <label className="od-field">
-          <span>{content.form.companyLabel}</span>
-          <input name="company" maxLength={150} autoComplete="organization" />
-        </label>
-        <label className="od-field">
-          <span>{content.form.subjectLabel}</span>
-          <input name="subject" required maxLength={150} />
-        </label>
-        <label className="od-field full-field">
-          <span>{content.form.messageLabel}</span>
-          <textarea name="message" required maxLength={5000} />
-        </label>
-      </div>
-      <label className="honeypot" aria-hidden="true">
-        Website
-        <input name="website" tabIndex={-1} autoComplete="off" />
-      </label>
-      <div className="form-actions">
-        <button className="primary-action" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Sending…' : content.form.submitLabel}
-        </button>
-        <p className="privacy-note">
-          {content.form.privacyLabel} <Link href="/privacy">Privacy policy</Link>.
-        </p>
-      </div>
-      <p className={status === 'error' ? 'form-status error' : 'form-status'} role="status" hidden={!message}>
-        {message}
-      </p>
-    </form>
-  );
-}
-
 export function Portfolio({ content }: { content: PortfolioContent }) {
   const [dialog, setDialog] = useState<DialogName | null>(null);
   const { site, aboutMarkdown } = content;
@@ -202,7 +126,6 @@ export function Portfolio({ content }: { content: PortfolioContent }) {
               </a>
             ))}
           </nav>
-          <ContactForm content={site.contacts} />
         </div>
       </Modal>
 
@@ -220,4 +143,3 @@ export function Portfolio({ content }: { content: PortfolioContent }) {
     </>
   );
 }
-

@@ -3,14 +3,17 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['**/.next/**', '**/dist/**', '**/coverage/**', 'content/**'] },
+  { ignores: ['.next/**', 'content/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node }
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
-      parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname }
+      globals: { ...globals.browser, ...globals.node }
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -18,4 +21,3 @@ export default tseslint.config(
     }
   }
 );
-

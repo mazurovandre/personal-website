@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const requiredText = z.string().trim().min(1);
-const safeUrl = z.string().url().refine((value) => {
+const publicUrl = z.string().url().refine((value) => {
   const protocol = new URL(value).protocol;
   return protocol === 'https:' || protocol === 'http:';
 }, 'Only HTTP(S) links are allowed');
@@ -26,19 +26,8 @@ export const siteContentSchema = z.object({
     email: z.string().trim().email().max(254),
     links: z.array(z.object({
       label: requiredText.max(80),
-      url: safeUrl
-    })).max(12),
-    form: z.object({
-      title: requiredText.max(120),
-      nameLabel: requiredText.max(80),
-      emailLabel: requiredText.max(80),
-      companyLabel: requiredText.max(80),
-      subjectLabel: requiredText.max(80),
-      messageLabel: requiredText.max(80),
-      submitLabel: requiredText.max(80),
-      successMessage: requiredText.max(300),
-      privacyLabel: requiredText.max(120)
-    })
+      url: publicUrl
+    })).max(12)
   }),
   cv: z.object({
     title: requiredText.max(80),
@@ -55,14 +44,3 @@ export const siteContentSchema = z.object({
 });
 
 export type SiteContent = z.infer<typeof siteContentSchema>;
-
-export const contactRequestSchema = z.object({
-  name: requiredText.max(100),
-  email: z.string().trim().email().max(254),
-  company: z.string().trim().max(150).optional().default(''),
-  subject: requiredText.max(150),
-  message: requiredText.max(5000),
-  website: z.string().max(200).optional().default('')
-}).strict();
-
-export type ContactRequest = z.infer<typeof contactRequestSchema>;

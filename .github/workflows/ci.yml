@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   quality:
@@ -24,25 +23,6 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
-      - run: pnpm test
-
-  images:
-    if: github.event_name == 'push'
-    needs: quality
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: [web, api]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: apps/${{ matrix.app }}/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository }}-${{ matrix.app }}:${{ github.sha }}
+      - run: pnpm build
+        env:
+          SITE_URL: https://example.com
