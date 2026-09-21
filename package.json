@@ -1,0 +1,28 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.6.2",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "content:validate": "node scripts/validate-content.mjs content",
+    "content:publish": "bash scripts/publish-content.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "globals": "^16.0.0",
+    "turbo": "^2.4.4",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.26.0",
+    "vitest": "^3.0.8"
+  }
+}

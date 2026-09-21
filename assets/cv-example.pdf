@@ -1,0 +1,62 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R /F3 6 0 R >> >> /Contents 7 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >>
+endobj
+7 0 obj
+<< /Length 1836 >>
+stream
+0.14 0.15 0.14 rg
+BT /F2 9 Tf 1 0 0 1 52 778 Tm (SAMPLE CV / DEMONSTRATION CONTENT) Tj ET
+BT /F3 30 Tf 1 0 0 1 52 738 Tm (ANDREY MAZUROV) Tj ET
+BT /F1 13 Tf 1 0 0 1 52 703 Tm (FullStack JavaScript Developer) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 678 Tm (test@test.com) Tj ET
+BT /F2 12 Tf 1 0 0 1 52 642 Tm (PROFILE) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 618 Tm (Fullstack developer focused on turning product ideas into responsive interfaces) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 601 Tm (and maintainable server-side applications. A practical approach to clear) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 584 Tm (architecture, readable code and thoughtful user experiences.) Tj ET
+BT /F2 12 Tf 1 0 0 1 52 551 Tm (CORE TECHNOLOGIES) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 527 Tm (TypeScript / React / NestJS) Tj ET
+BT /F2 12 Tf 1 0 0 1 52 494 Tm (ADDITIONAL TOOLS - EXAMPLE STACK) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 470 Tm (Node.js, JavaScript, HTML, CSS, PostgreSQL, REST APIs, Git and Docker. Adapt) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 453 Tm (this list to reflect your actual experience.) Tj ET
+BT /F2 12 Tf 1 0 0 1 52 420 Tm (PROJECT AREAS - ILLUSTRATIVE) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 396 Tm (Web interfaces: accessible components, responsive layouts and clear interaction) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 379 Tm (states. APIs: structured application logic and predictable data exchange.) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 362 Tm (Product delivery: connecting the browser, server and database.) Tj ET
+BT /F2 12 Tf 1 0 0 1 52 329 Tm (EXPERIENCE & EDUCATION) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 305 Tm (Add verified roles, project descriptions, dates and qualifications here. No) Tj ET
+BT /F1 11 Tf 1 0 0 1 52 288 Tm (employment history or education credentials are represented by this sample.) Tj ET
+BT /F1 9 Tf 1 0 0 1 52 255 Tm (This is a one-page example, not a verified professional resume.) Tj ET
+endstream
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000267 00000 n 
+0000000337 00000 n 
+0000000412 00000 n 
+0000000484 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+2372
+%%EOF

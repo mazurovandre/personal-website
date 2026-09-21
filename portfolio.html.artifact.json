@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "portfolio.html",
+  "entry": "portfolio.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-09-15T08:34:12.246Z",
+  "updatedAt": "2026-09-21T12:14:42.334Z",
+  "metadata": {
+    "inferred": true,
+    "reconciled": true
+  }
+}
