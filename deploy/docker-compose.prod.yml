@@ -1,0 +1,40 @@
+# Production topology: this app sits behind an external reverse proxy
+# (on this deployment: remnawave-nginx, already terminating TLS for other
+# subdomains on the same VPS) instead of publishing 80/443 itself. Run from
+# the repository root:
+#
+#   docker compose -f deploy/docker-compose.prod.yml up -d --build
+#
+name: personal-website
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        SITE_URL: https://mazurovandre.online
+    container_name: personal-website
+    restart: unless-stopped
+    environment:
+      SITE_URL: https://mazurovandre.online
+      CONTENT_DIR: /content
+    volumes:
+      - /opt/personal-website/content:/content:ro
+    networks:
+      - default
+      - remnawave-network
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:3000/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  default: {}
+  # Pre-existing network created by /opt/remnawave/nginx/docker-compose.yml;
+  # joining it lets remnawave-nginx reach this container by name to add a
+  # new subdomain without touching the other services on that proxy.
+  remnawave-network:
+    external: true
