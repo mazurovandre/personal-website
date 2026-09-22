@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,3 +27,34 @@ jobs:
       - run: pnpm build
         env:
           SITE_URL: https://example.com
+
+  deploy:
+    needs: quality
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-personal-website
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Sync source
+        run: |
+          rsync -az --delete \
+            --exclude='.git' --exclude='node_modules' --exclude='.next' \
+            --exclude='content' --exclude='.env' --exclude='.env.*' \
+            -e "ssh -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=~/.ssh/known_hosts" \
+            ./ pw-deploy@138.16.153.103:/opt/personal-website/app/
+
+      - name: Build and restart
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o UserKnownHostsFile=~/.ssh/known_hosts \
+            pw-deploy@138.16.153.103 \
+            'cd /opt/personal-website/app && docker compose -f deploy/docker-compose.prod.yml up -d --build'

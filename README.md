@@ -41,7 +41,13 @@ Initial deploy:
 3. On the server: `cd /opt/personal-website/app && docker compose -f deploy/docker-compose.prod.yml up -d --build`.
 4. On the reverse-proxy host, add a `server {}` block for the site's domain(s) pointing at the `personal-website` container on port 3000, with its own TLS certificate.
 
-For an application update, re-sync the repository and re-run `docker compose -f deploy/docker-compose.prod.yml up -d --build`. For a content-only update, re-sync only `content/` — no restart is needed, the running process picks up changes within a minute.
+### Code updates: automatic via GitHub Actions
+
+Pushing to `main` (after `.github/workflows/ci.yml`'s `quality` job passes) triggers the `deploy` job, which `rsync`s the repository to `/opt/personal-website/app/` and re-runs `docker compose -f deploy/docker-compose.prod.yml up -d --build` on the server over SSH. It authenticates as a dedicated, unprivileged `pw-deploy` system user (member of the `docker` group only, no root access, no access to other apps on the same host) using a key stored in the `DEPLOY_SSH_KEY` repository secret (host fingerprint in `DEPLOY_KNOWN_HOSTS`). Trigger it manually from the Actions tab (`workflow_dispatch`) if needed.
+
+### Content updates: manual
+
+Content is never in Git or in CI. Re-sync only `content/` to `/opt/personal-website/content/` on the server (e.g. via `rsync` from the machine that holds it) — no restart is needed, the running process picks up changes within a minute.
 
 ## Checks
 
